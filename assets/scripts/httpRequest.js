@@ -1,7 +1,7 @@
 const listElement = document.querySelector(".posts");
 const postTemplate = document.getElementById("single-post");
 
-function sendHttpRequest(method, url) {
+function sendHttpRequest(method, url, data) {
   // adding a promise to this async code
   const promise = new Promise((resolve, reject) => {
     // Creating an object of XMLHttpRequest
@@ -9,7 +9,8 @@ function sendHttpRequest(method, url) {
     // Configuring a request, open takes 2 arguments first 'method' and second 'url'. Basically we have informed xhr which kind of request we want to send to address or to the end point.
     xhr.open(method, url);
     // this will send the request. please check the network tab in developer tool options in the browser.
-    xhr.send();
+    // xhr.send();
+    xhr.send(JSON.stringify(data));
 
     // xhr.responseType = "json"; // instead of using parse method, we can also define our response type initially.
 
@@ -47,3 +48,16 @@ async function fetchPosts() {
 }
 
 fetchPosts();
+
+async function createPost(title, content) {
+  const userId = Math.random();
+  const post = {
+    title: title,
+    body: content,
+    userId: userId
+  };
+
+  sendHttpRequest("POST", "https://jsonplaceholder.typicode.com/posts", post);
+}
+
+createPost("dummyTitle", "dummyBody");
