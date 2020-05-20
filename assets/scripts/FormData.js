@@ -61,9 +61,9 @@ form.addEventListener("submit", event => {
 async function createPost(title, content) {
   const userId = Math.random();
   // creating FormData Object
-  const fd = new FormData();
-  fd.append("title", title);
-  fd.append("body", content);
+  const fd = new FormData(form); // js tries to parse data directly from the form.
+  //   fd.append("title", title);
+  //   fd.append("body", content);
   fd.append("userId", userId);
 
   sendHttpRequest("POST", "https://jsonplaceholder.typicode.com/posts", fd);
