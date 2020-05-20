@@ -53,7 +53,7 @@ function sendHttpRequest(method, url, data) {
 // an alternative to fetch post using async and await.
 async function fetchPosts() {
   try {
-    const respnseData = await sendHttpRequest("GET", "https://jsonplaceholder.typicode.com/pos");
+    const respnseData = await sendHttpRequest("GET", "https://jsonplaceholder.typicode.com/posts");
     const listOfPosts = JSON.parse(respnseData); // Data parsing from JSON to JS Object using JSON.parse() helper method.
     for (const post of listOfPosts) {
       const postEl = document.importNode(postTemplate.content, true);
