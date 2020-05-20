@@ -74,4 +74,4 @@ async function createPost(title, content) {
   sendHttpRequest("POST", "https://jsonplaceholder.typicode.com/posts", post);
 }
 
-createPost("dummyTitle", "dummyBody");
+// createPost("dummyTitle", "dummyBody");
