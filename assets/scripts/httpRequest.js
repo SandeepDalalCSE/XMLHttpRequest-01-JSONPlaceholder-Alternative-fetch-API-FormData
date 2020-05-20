@@ -2,6 +2,7 @@ const listElement = document.querySelector(".posts");
 const postTemplate = document.getElementById("single-post");
 const form = document.querySelector("#new-post form");
 const fetchButton = document.querySelector("#available-posts button");
+const postList = document.querySelector("ul");
 
 function sendHttpRequest(method, url, data) {
   // adding a promise to this async code
@@ -45,6 +46,7 @@ async function fetchPosts() {
     const postEl = document.importNode(postTemplate.content, true);
     postEl.querySelector("h2").textContent = post.title.toUpperCase();
     postEl.querySelector("p").textContent = post.body;
+    postEl.querySelector("li").id = post.id;
     listElement.append(postEl);
   }
 }
@@ -75,3 +77,12 @@ async function createPost(title, content) {
 }
 
 // createPost("dummyTitle", "dummyBody");
+
+postList.addEventListener("click", () => {
+  if (event.target.tagName === "BUTTON") {
+    console.log("clicked on button!");
+    const postId = event.target.closest("li").id;
+    console.log(postId);
+    sendHttpRequest("DELETE", `https://jsonplaceholder.typicode.com/posts/${postId}`);
+  }
+});
