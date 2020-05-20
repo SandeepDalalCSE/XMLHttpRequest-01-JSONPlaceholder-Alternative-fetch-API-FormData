@@ -1,3 +1,5 @@
+const listElement = document.querySelector(".posts");
+const postTemplate = document.getElementById("single-post");
 // Creating an object of XMLHttpRequest
 const xhr = new XMLHttpRequest();
 // Configuring a request, open takes 2 arguments first 'method' and second 'url'. Basically we have informed xhr which kind of request we want to send to address or to the end point.
@@ -12,4 +14,10 @@ xhr.onload = function() {
   console.log(xhr.response); // Consoling only response key in xhr object. Note: response is in JSON (JavaScript Object Notation) format. To use this data we need to convert it first into JavaScript string/object.
   const listOfPosts = JSON.parse(xhr.response); // Data parsing from JSON to JS Object using JSON.parse() helper method.
   console.log(listOfPosts);
+  for (const post of listOfPosts) {
+    const postEl = document.importNode(postTemplate.content, true);
+    postEl.querySelector("h2").textContent = post.title.toUpperCase();
+    postEl.querySelector("p").textContent = post.body;
+    listElement.append(postEl);
+  }
 };
