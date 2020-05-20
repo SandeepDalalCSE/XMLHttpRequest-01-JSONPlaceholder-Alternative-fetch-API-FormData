@@ -38,14 +38,30 @@ function sendHttpRequest(method, url, data) {
 
   // this is the global available function in modern browsers, it is not supported in internet explorer browser.
   return fetch(url, {
+    // fetch() return a promise
     method: method,
     body: JSON.stringify(data),
     headers: {
       "Content-Type": "application/json" // this tells the server to an outgoing request that i have json data.
     } // data sent to a server will be always JSON, so we need to convert it into JSON format using JSON.stringify() method.
-  }).then(response => {
-    return response.json(); //this will parson the JSON data into javascript data and also convert streamed parsed body into snapshot parsed body
-  }); // fetch() return a promise
+  })
+    .then(response => {
+      console.log(response);
+      console.log(response.headers["Content-Type"]);
+      console.log(response.body);
+      console.log(response.status);
+
+      if (response.status >= 200 && response.status < 300) {
+        // checking initially if we got success response status.
+        return response.json(); //this will parson the JSON data into javascript data and also convert streamed parsed body into snapshot parsed body
+      } else {
+        throw new Error("Something went wrong!!!");
+      }
+    })
+    .catch(error => {
+      console.log(error);
+      throw new Error("Something went wrong with network!!!");
+    });
 }
 
 // function fetchPosts() {
