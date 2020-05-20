@@ -6,36 +6,6 @@ const fetchButton = document.querySelector("#available-posts button");
 const postList = document.querySelector("ul");
 
 function sendHttpRequest(method, url, data) {
-  // adding a promise to this async code
-  //   const promise = new Promise((resolve, reject) => {
-  // Creating an object of XMLHttpRequest
-  //     const xhr = new XMLHttpRequest();
-  //     // Configuring a request, open takes 2 arguments first 'method' and second 'url'. Basically we have informed xhr which kind of request we want to send to address or to the end point.
-  //     xhr.open(method, url);
-  //     // this will send the request. please check the network tab in developer tool options in the browser.
-
-  //     // xhr.send();
-  //     xhr.send(JSON.stringify(data));
-
-  //     // xhr.responseType = "json"; // instead of using parse method, we can also define our response type initially.
-
-  //     xhr.onload = function() {
-  //       if (xhr.status >= 200 && xhr.status < 300) {
-  //         resolve(xhr.response);
-  //       } else {
-  //         reject(new Error("something went wrong!"));
-  //       }
-  //     };
-
-  //     // Handling error
-  //     xhr.onerror = function() {
-  //       reject(new Error("Failed to send a request"));
-  //       console.log(xhr.response);
-  //       console.log(xhr.status);
-  //     };
-  //   });
-  //   return promise;
-
   // this is the global available function in modern browsers, it is not supported in internet explorer browser.
   return fetch(url, {
     // fetch() return a promise
@@ -47,8 +17,6 @@ function sendHttpRequest(method, url, data) {
   })
     .then(response => {
       console.log(response);
-      console.log(response.headers["Content-Type"]);
-      console.log(response.body);
       console.log(response.status);
 
       if (response.status >= 200 && response.status < 300) {
@@ -63,20 +31,6 @@ function sendHttpRequest(method, url, data) {
       throw new Error("Something went wrong with network!!!");
     });
 }
-
-// function fetchPosts() {
-//   sendHttpRequest("GET", "https://jsonplaceholder.typicode.com/posts").then(resData => {
-//     const listOfPosts = JSON.parse(resData); // Data parsing from JSON to JS Object using JSON.parse() helper method.
-//     for (const post of listOfPosts) {
-//       const postEl = document.importNode(postTemplate.content, true);
-//       postEl.querySelector("h2").textContent = post.title.toUpperCase();
-//       postEl.querySelector("p").textContent = post.body;
-//       listElement.append(postEl);
-//     }
-//   });
-// }
-
-// fetchPosts();
 
 // an alternative to fetch post using async and await.
 async function fetchPosts() {
@@ -94,13 +48,10 @@ async function fetchPosts() {
     console.log(error);
   }
 }
-
-// fetchPosts();
-// fetchButton.addEventListener('click',() => {
-//   fetchPosts();
-// })
+// Adding EventListener to the button
 fetchButton.addEventListener("click", fetchPosts);
 
+// Adding EventListener to the form
 form.addEventListener("submit", event => {
   event.preventDefault();
   const enteredTitle = event.currentTarget.querySelector("#title").value;
@@ -109,6 +60,7 @@ form.addEventListener("submit", event => {
   createPost(enteredTitle, enteredContent);
 });
 
+// creating createPost method
 async function createPost(title, content) {
   const userId = Math.random();
   const post = {
@@ -120,8 +72,7 @@ async function createPost(title, content) {
   sendHttpRequest("POST", "https://jsonplaceholder.typicode.com/posts", post);
 }
 
-// createPost("dummyTitle", "dummyBody");
-
+// adding eventListener to ul element in the DOM
 postList.addEventListener("click", () => {
   if (event.target.tagName === "BUTTON") {
     console.log("clicked on button!");
