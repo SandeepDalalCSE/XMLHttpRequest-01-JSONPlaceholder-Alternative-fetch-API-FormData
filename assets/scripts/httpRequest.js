@@ -20,16 +20,30 @@ function sendHttpRequest(method, url) {
   return promise;
 }
 
-function fetchPosts() {
-  sendHttpRequest("GET", "https://jsonplaceholder.typicode.com/posts").then(resData => {
-    const listOfPosts = JSON.parse(resData); // Data parsing from JSON to JS Object using JSON.parse() helper method.
-    for (const post of listOfPosts) {
-      const postEl = document.importNode(postTemplate.content, true);
-      postEl.querySelector("h2").textContent = post.title.toUpperCase();
-      postEl.querySelector("p").textContent = post.body;
-      listElement.append(postEl);
-    }
-  });
+// function fetchPosts() {
+//   sendHttpRequest("GET", "https://jsonplaceholder.typicode.com/posts").then(resData => {
+//     const listOfPosts = JSON.parse(resData); // Data parsing from JSON to JS Object using JSON.parse() helper method.
+//     for (const post of listOfPosts) {
+//       const postEl = document.importNode(postTemplate.content, true);
+//       postEl.querySelector("h2").textContent = post.title.toUpperCase();
+//       postEl.querySelector("p").textContent = post.body;
+//       listElement.append(postEl);
+//     }
+//   });
+// }
+
+// fetchPosts();
+
+// an alternative to fetch post using async and await.
+async function fetchPosts() {
+  const respnseData = await sendHttpRequest("GET", "https://jsonplaceholder.typicode.com/posts");
+  const listOfPosts = JSON.parse(respnseData); // Data parsing from JSON to JS Object using JSON.parse() helper method.
+  for (const post of listOfPosts) {
+    const postEl = document.importNode(postTemplate.content, true);
+    postEl.querySelector("h2").textContent = post.title.toUpperCase();
+    postEl.querySelector("p").textContent = post.body;
+    listElement.append(postEl);
+  }
 }
 
 fetchPosts();
