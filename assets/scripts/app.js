@@ -21,3 +21,5 @@ xhr.onload = function() {
     listElement.append(postEl);
   }
 };
+
+// this is basic structure to deal with http requests.
