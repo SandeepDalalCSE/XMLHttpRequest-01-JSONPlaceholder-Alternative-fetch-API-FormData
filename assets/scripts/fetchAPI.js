@@ -37,7 +37,13 @@ function sendHttpRequest(method, url, data) {
   //   return promise;
 
   // this is the global available function in modern browsers, it is not supported in internet explorer browser.
-  return fetch(url).then(response => {
+  return fetch(url, {
+    method: method,
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json" // this tells the server to an outgoing request that i have json data.
+    } // data sent to a server will be always JSON, so we need to convert it into JSON format using JSON.stringify() method.
+  }).then(response => {
     return response.json(); //this will parson the JSON data into javascript data and also convert streamed parsed body into snapshot parsed body
   }); // fetch() return a promise
 }
