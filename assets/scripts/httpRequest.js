@@ -83,6 +83,6 @@ postList.addEventListener("click", () => {
     console.log("clicked on button!");
     const postId = event.target.closest("li").id;
     console.log(postId);
-    sendHttpRequest("DELETE", `https://jsonplaceholder.typicode.com/posts/${postId}`);
+    sendHttpRequest("DELETE", `https://jsonplaceholder.typicode.com/posts/${postId}`); // check delete request status in network tab
   }
 });
