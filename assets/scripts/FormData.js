@@ -10,10 +10,7 @@ function sendHttpRequest(method, url, data) {
   return fetch(url, {
     // fetch() return a promise
     method: method,
-    body: JSON.stringify(data),
-    headers: {
-      "Content-Type": "application/json" // this tells the server to an outgoing request that i have json data.
-    } // data sent to a server will be always JSON, so we need to convert it into JSON format using JSON.stringify() method.
+    body: data
   })
     .then(response => {
       console.log(response);
@@ -63,13 +60,13 @@ form.addEventListener("submit", event => {
 // creating createPost method
 async function createPost(title, content) {
   const userId = Math.random();
-  const post = {
-    title: title,
-    body: content,
-    userId: userId
-  };
+  // creating FormData Object
+  const fd = new FormData();
+  fd.append("title", title);
+  fd.append("body", content);
+  fd.append("userId", userId);
 
-  sendHttpRequest("POST", "https://jsonplaceholder.typicode.com/posts", post);
+  sendHttpRequest("POST", "https://jsonplaceholder.typicode.com/posts", fd);
 }
 
 // adding eventListener to ul element in the DOM
