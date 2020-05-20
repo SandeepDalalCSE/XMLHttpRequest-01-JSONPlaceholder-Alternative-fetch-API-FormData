@@ -1,5 +1,7 @@
 const listElement = document.querySelector(".posts");
 const postTemplate = document.getElementById("single-post");
+const form = document.querySelector("#new-post form");
+const fetchButton = document.querySelector("#available-posts button");
 
 function sendHttpRequest(method, url, data) {
   // adding a promise to this async code
@@ -47,7 +49,19 @@ async function fetchPosts() {
   }
 }
 
-fetchPosts();
+// fetchPosts();
+// fetchButton.addEventListener('click',() => {
+//   fetchPosts();
+// })
+fetchButton.addEventListener("click", fetchPosts);
+
+form.addEventListener("submit", event => {
+  event.preventDefault();
+  const enteredTitle = event.currentTarget.querySelector("#title").value;
+  const enteredContent = event.currentTarget.querySelector("#content").value;
+
+  createPost(enteredTitle, enteredContent);
+});
 
 async function createPost(title, content) {
   const userId = Math.random();
