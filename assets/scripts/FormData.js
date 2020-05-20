@@ -78,3 +78,5 @@ postList.addEventListener("click", () => {
     sendHttpRequest("DELETE", `https://jsonplaceholder.typicode.com/posts/${postId}`); // check delete request status in network tab
   }
 });
+
+// it is recommended to use fetch API because most of browser or 3rd party APIs use JSON Data.
